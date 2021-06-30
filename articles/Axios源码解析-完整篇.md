@@ -1,46 +1,43 @@
-
-
-![](../images/1.png)
+![](https://github.com/hkdg/frontend-notes/raw/main/images/1.png)
 
 ## 背景
-日常开发中我们经常跟接口打交道，而在现代标准前端框架(Vue/React)开发中，离不开的是 axios，出于好奇阅读了一下源码。
 
-阅读源码免不了枯燥无味，容易被上下文互相依赖的关系搞得一头露水，我们可以抓住主要矛盾，忽略次要矛盾，可结合 debugger 调试模式，先把主干流程梳理清楚，在慢慢啃细节比较好，以下是对源码和背后的设计思想进行解读，不足之处请多多指正。
+日常开发中我们经常跟接口打交道，而在现代标准前端框架(`Vue/React`)开发中，离不开的是 `axios`，出于好奇阅读了一下源码。
 
-
+阅读源码免不了枯燥无味，容易被上下文互相依赖的关系搞得一头露水，我们可以抓住主要矛盾，忽略次要矛盾，可结合 `debugger` 调试模式，先把主干流程梳理清楚，在慢慢啃细节比较好，以下是对源码和背后的设计思想进行解读，不足之处请多多指正。
 
 ## axios 是什么
 
-1. 基于 promise 封装的 http 请求库（避免回调地狱）
+1. 基于 `promise` 封装的 `http` 请求库（避免回调地狱）
 
-2. 支持浏览器端和 node 端
+2. 支持浏览器端和 `node` 端
 
 3. 丰富的配置项：数据转换器，拦截器等等
 
-4. 客户端支持防御 XSRF
+4. 客户端支持防御 `XSRF`
 
-5. 生态完善（支持 Vue/React，周边插件等等）
+5. 生态完善（支持 `Vue/React`，周边插件等等）
 
-另外两条数据证明 axios 使用之广泛
+另外两条数据证明 `axios` 使用之广泛
 
-1.截至 2021 年 6月底，github 的 star 数高达 85.4k
+1.截至 2021 年 6月底，`github` 的 `star` 数高达 85.4k
 
-![](../images/2.png)
+![](https://github.com/hkdg/frontend-notes/raw/main/images/2.png)
 
-2.npm 的周下载量达到千万级别
+2.`npm` 的周下载量达到千万级别
 
-![](../images/3.png)
+![](https://github.com/hkdg/frontend-notes/raw/main/images/3.png)
 
 ## Axios 的基本使用
 
-![](../images/4.png)
+![](https://github.com/hkdg/frontend-notes/raw/main/images/4.png)
 
 
 ## 源码目录结构
 
 先看看目录说明，如下
 
-![](../images/5.png)
+![](https://github.com/hkdg/frontend-notes/raw/main/images/5.png)
 
 ## 执行流程
 
@@ -55,7 +52,7 @@
 7. 响应拦截器，对服务端数据做处理，比如 `token` 失效退出登陆，报错 `dialog` 提示
 8. 返回数据给开发者
 
-![](../images/6.png)
+![](https://github.com/hkdg/frontend-notes/raw/main/images/6.png)
 
 ### 入口文件(lib/axios.js)
 
@@ -193,7 +190,7 @@ Axios.prototype.request = function request(config) {
 
 通过对数组的遍历，形成一条异步的 `promise` 调用链，是 `axios` 对 `promise` 的巧妙运用，用一张图表示
 
-![](../images/7.png)
+![](https://github.com/hkdg/frontend-notes/raw/main/images/7.png)
 
 ### 拦截器 (lib/core/InterceptorManager.js)
 上面说到的 `promise` 调用链，里面涉及到拦截器，拦截器比较简单，挂载一个属性和三个原型方法
@@ -242,7 +239,7 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 **dispatchRequest** 局部图
 
-![](../images/8.png)
+![](https://github.com/hkdg/frontend-notes/raw/main/images/8.png)
 
 ```js
 module.exports = function dispatchRequest(config) {
@@ -350,7 +347,7 @@ function getDefaultAdapter() {
 
 简易版流程图表示大致内容：
 
-![](../images/9.png)
+![](https://github.com/hkdg/frontend-notes/raw/main/images/9.png)
 
 源码比较长，使用伪代码表示重点部分
 
